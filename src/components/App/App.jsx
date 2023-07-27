@@ -5,6 +5,11 @@ import ContactList from '../ContactList/ContactList';
 import { Wrapper, H1, H2 } from './App.styled';
 
 import { useSelector } from 'react-redux';
+import { Route, Routes } from 'react-router-dom';
+import Layout from 'components/Layout/Layout';
+import Home from 'pages/Home';
+import Register from 'pages/Register';
+import Login from 'pages/Login';
 
 export const App = () => {
     const contacts = useSelector(state => state.contacts.contactsList);
@@ -19,14 +24,21 @@ export const App = () => {
     const vilibleContact = getVisibleContacts();
 
     return (
-        <Wrapper>
-            <H1>Phonebook</H1>
-            <ContactForm />
+        <Routes>
+            <Route path="/" element={<Layout />}>
+                <Route index element={<Home />} />
+                <Route path="register" element={<Register />} />
+                <Route path="login" element={<Login />} />
+            </Route>
+        </Routes>
+        // <Wrapper>
+        //     <H1>Phonebook</H1>
+        //     <ContactForm />
 
-            <H2>Contacts</H2>
-            <Filter />
+        //     <H2>Contacts</H2>
+        //     <Filter />
 
-            <ContactList vilibleContact={vilibleContact} />
-        </Wrapper>
+        //     <ContactList vilibleContact={vilibleContact} />
+        // </Wrapper>
     );
 };
