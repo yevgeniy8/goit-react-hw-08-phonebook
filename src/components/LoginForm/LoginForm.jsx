@@ -2,7 +2,13 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { login } from 'redux/auth/authOperations';
 
-import { FormLogin, LabelLogin, ButtonLogin } from './LoginForm.styled';
+import {
+    FormLogin,
+    LabelLogin,
+    ButtonLogin,
+    InputLogin,
+    H2,
+} from './LoginForm.styled';
 
 const LoginForm = () => {
     const dispatch = useDispatch();
@@ -22,13 +28,14 @@ const LoginForm = () => {
     return (
         <div>
             <FormLogin onSubmit={handleSubmit}>
+                <H2>Login form</H2>
                 <LabelLogin>
                     Email
-                    <input type="email" name="email" />
+                    <InputLogin type="email" name="email" />
                 </LabelLogin>
                 <LabelLogin>
                     Password
-                    <input type="password" name="password" />
+                    <InputLogin type="password" name="password" />
                 </LabelLogin>
                 <ButtonLogin type="submit">Log In</ButtonLogin>
             </FormLogin>

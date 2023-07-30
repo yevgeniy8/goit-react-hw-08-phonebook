@@ -6,6 +6,8 @@ import {
     FormRegister,
     LabelRegister,
     RegisterButton,
+    InputRegister,
+    H2,
 } from './RegisterForm.styled';
 
 const RegisterForm = () => {
@@ -27,17 +29,18 @@ const RegisterForm = () => {
     return (
         <div>
             <FormRegister onSubmit={handleSubmit}>
+                <H2>Register form</H2>
                 <LabelRegister>
                     Username
-                    <input type="text" name="name" />
+                    <InputRegister type="text" name="name" />
                 </LabelRegister>
                 <LabelRegister>
                     Email
-                    <input type="email" name="email" />
+                    <InputRegister type="email" name="email" />
                 </LabelRegister>
                 <LabelRegister>
                     Password
-                    <input type="password" name="password" />
+                    <InputRegister type="password" name="password" />
                 </LabelRegister>
                 <RegisterButton type="submit">Register</RegisterButton>
             </FormRegister>

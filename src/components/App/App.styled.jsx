@@ -17,7 +17,7 @@ export const H2 = styled.h2`
 
 export const Wrapper = styled.div`
     background-color: rgb(129, 159, 237);
-    margin: 20px auto;
+    margin: 0px auto;
     padding: 20px;
     width: 450px;
     border-radius: 8px;
