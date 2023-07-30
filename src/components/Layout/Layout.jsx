@@ -1,18 +1,14 @@
-import React from 'react';
-import { NavLink, Outlet } from 'react-router-dom';
+import React, { Suspense } from 'react';
+import { Outlet } from 'react-router-dom';
+import AppBar from 'components/AppBar/AppBar';
 
 function Layout() {
     return (
         <div>
-            <header>
-                <nav>
-                    <NavLink to="/">Home</NavLink>
-                    <NavLink to="/register">Register</NavLink>
-                    <NavLink to="/login">Log In</NavLink>
-                </nav>
-            </header>
-
-            <Outlet />
+            <AppBar />
+            <Suspense fallback={null}>
+                <Outlet />
+            </Suspense>
         </div>
     );
 }

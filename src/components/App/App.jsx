@@ -1,44 +1,60 @@
-import ContactForm from '../ContactForm/ContactForm';
-import Filter from '../Filter/Filter';
-import ContactList from '../ContactList/ContactList';
-
-import { Wrapper, H1, H2 } from './App.styled';
-
-import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import Layout from 'components/Layout/Layout';
-import Home from 'pages/Home';
-import Register from 'pages/Register';
-import Login from 'pages/Login';
+
+import { lazy, useEffect } from 'react';
+import useAuth from 'hooks/useAuth';
+import { refreshUser } from 'redux/auth/authOperations';
+import { RestrictedRoute } from 'components/RestrictedRoute/RestrictedRoute';
+import { PrivateRoute } from 'components/PrivateRoute/PrivateRoute';
+
+const Home = lazy(() => import('pages/Home'));
+const Register = lazy(() => import('pages/Register'));
+const Login = lazy(() => import('pages/Login'));
+const Contacts = lazy(() => import('pages/Contacts'));
 
 export const App = () => {
-    const contacts = useSelector(state => state.contacts.contactsList);
-    const filter = useSelector(state => state.filter);
+    const dispatch = useDispatch();
+    const { isRefreshing } = useAuth();
 
-    const getVisibleContacts = () => {
-        return contacts.filter(contact =>
-            contact.name.toLowerCase().includes(filter.toLowerCase())
-        );
-    };
+    useEffect(() => {
+        dispatch(refreshUser());
+    }, [dispatch]);
 
-    const vilibleContact = getVisibleContacts();
-
-    return (
+    return isRefreshing ? (
+        <b>Refreshing user...</b>
+    ) : (
         <Routes>
             <Route path="/" element={<Layout />}>
                 <Route index element={<Home />} />
-                <Route path="register" element={<Register />} />
-                <Route path="login" element={<Login />} />
+                <Route
+                    path="register"
+                    element={
+                        <RestrictedRoute
+                            redirectTo="/contacts"
+                            component={<Register />}
+                        />
+                    }
+                />
+                <Route
+                    path="login"
+                    element={
+                        <RestrictedRoute
+                            redirectTo="/contacts"
+                            component={<Login />}
+                        />
+                    }
+                />
+                <Route
+                    path="contacts"
+                    element={
+                        <PrivateRoute
+                            redirectTo="/login"
+                            component={<Contacts />}
+                        />
+                    }
+                />
             </Route>
         </Routes>
-        // <Wrapper>
-        //     <H1>Phonebook</H1>
-        //     <ContactForm />
-
-        //     <H2>Contacts</H2>
-        //     <Filter />
-
-        //     <ContactList vilibleContact={vilibleContact} />
-        // </Wrapper>
     );
 };
