@@ -46,7 +46,7 @@ const handleDeleteContactFulfilled = (state, action) => {
 };
 
 const handleLogoutFulfilled = state => {
-    state.items = [];
+    state.contactsList = [];
     state.error = null;
     state.isLoading = false;
 };
